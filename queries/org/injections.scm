@@ -1,1 +1,1 @@
-(block (parameters) @language (contents) @content)
+(block (param) @language (contents) @content)

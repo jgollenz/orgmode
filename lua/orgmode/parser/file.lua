@@ -366,7 +366,7 @@ end
 
 ---@private
 function File:_parse_source_code_filetypes()
-  local blocks = self:get_ts_matches('(block (name) @name (parameters) @parameters (#eq? @name "SRC"))')
+  local blocks = self:get_ts_matches('(block (name) @name (param) @parameters (#eq? @name "SRC"))')
   local source_code_filetypes = {}
   for _, item in ipairs(blocks) do
     local params = vim.split(item.parameters.text, '%s+')
