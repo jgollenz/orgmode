@@ -463,7 +463,14 @@ end
 function Section:demote(amount, demote_child_sections)
   amount = amount or 1
   demote_child_sections = demote_child_sections or false
-  vim.api.nvim_call_function('setline', { self.range.start_line, string.rep('*', amount) .. self.line })
+
+  local newline = string.rep('*', amount) .. self.line
+  if #(self:get_own_tags()) > 0 then
+    local first_tag = ':' .. self.own_tags[1] .. ':'
+    newline = newline:gsub(string.rep(' ', amount + 1) .. first_tag, string.rep(' ', amount) .. first_tag)
+  end
+
+  vim.api.nvim_call_function('setline', { self.range.start_line, newline })
   if config.org_indent_mode == 'indent' then
     local contents = self.root:get_node_text_list(self.node)
     for i, content in ipairs(contents) do
@@ -490,7 +497,14 @@ function Section:promote(amount, promote_child_sections)
   if self.level == 1 then
     return utils.echo_warning('Cannot demote top level heading.')
   end
-  vim.api.nvim_call_function('setline', { self.range.start_line, self.line:sub(1 + amount) })
+
+  local newline = self.line:sub(1 + amount)
+  if #(self:get_own_tags()) > 0 then
+    local first_tag = ':' .. self.own_tags[1] .. ':'
+    newline = newline:gsub(string.rep(' ', amount) .. first_tag, string.rep(' ', amount + 1) .. first_tag)
+  end
+
+  vim.api.nvim_call_function('setline', { self.range.start_line, newline })
   if config.org_indent_mode == 'indent' then
     local contents = self.root:get_node_text_list(self.node)
     for i, content in ipairs(contents) do
