@@ -537,6 +537,26 @@ function OrgMappings:insert_todo_heading()
   return self:handle_return(config:get_todo_keywords().TODO[1] .. ' ')
 end
 
+function OrgMappings:insert_link(has_description)
+  local linenr = vim.fn.line('.')
+  local colnr = vim.fn.col('.')
+  local line = vim.fn.getline(linenr)
+  local link = '[' .. vim.fn.getreg('+') .. ']'
+  local description = ''
+  if has_description then
+    description = '[]'
+  end
+  -- TODO make more akin to how 'p' works in vim
+  local new_line = string.sub(line, 0, colnr - 1) .. '[' .. link .. description .. ']' .. string.sub(line, colnr, #line)
+  vim.fn.setline(linenr, new_line)
+  vim.fn.cursor(linenr, colnr + 2 + #link)
+  utils.echo_info(new_line)
+  if has_description then
+    vim.fn.cursor(linenr, colnr + 2 + #link)
+    return vim.cmd([[startinsert]])
+  end
+end
+
 function OrgMappings:move_subtree_up()
   local item = Files.get_closest_headline()
   local prev_headline = item:get_prev_headline_same_level()
@@ -708,6 +728,7 @@ function OrgMappings:org_schedule()
     item:add_scheduled_date(new_date)
   end)
 end
+
 
 ---@param inactive boolean
 function OrgMappings:org_time_stamp(inactive)

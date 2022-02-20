@@ -130,6 +130,8 @@ return {
       org_schedule = '<Leader>ois',
       org_time_stamp = '<Leader>oi.',
       org_time_stamp_inactive = '<Leader>oi!',
+      org_insert_link = '<Leader>oil',
+      org_insert_named_link = '<Leader>oiL',
       org_clock_in = '<Leader>oxi',
       org_clock_out = '<Leader>oxo',
       org_clock_cancel = '<leader>oxq',

@@ -76,6 +76,8 @@ return {
     org_schedule = { 'org_mappings.org_schedule' },
     org_time_stamp = { 'org_mappings.org_time_stamp' },
     org_time_stamp_inactive = { 'org_mappings.org_time_stamp', true },
+    org_insert_link = { 'org_mappings.insert_link' },
+    org_insert_named_link = { 'org_mappings.insert_link', true },
     org_clock_in = { 'clock.org_clock_in' },
     org_clock_out = { 'clock.org_clock_out' },
     org_clock_cancel = { 'clock.org_clock_cancel' },
